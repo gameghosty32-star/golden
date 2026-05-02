@@ -6,12 +6,20 @@
 <div class="auth-card mx-auto" style="max-width: 560px;">
     <div class="auth-header">
         <h2>{{ action }} província</h2>
-        <p>Informe o nome da província para continuar.</p>
+        <p>Informe o nome e a descrição da província.</p>
     </div>
     <form action="" method="post" class="auth-form">
-        <div class="mb-4">
+        <div class="mb-3">
             <label for="name" class="form-label">Nome da província</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ provincia.name if provincia else '' }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="description" class="form-label">Descrição</label>
+            <textarea class="form-control" id="description" name="description" rows="4">{{ provincia.description if provincia else '' }}</textarea>
+        </div>
+        <div class="mb-4">
+            <label for="population" class="form-label">População (opcional)</label>
+            <input type="number" min="0" class="form-control" id="population" name="population" value="{{ provincia.population if provincia and provincia.population is not none else '' }}">
         </div>
         <button type="submit" class="btn btn-dark w-100">{{ action }}</button>
         <a class="btn btn-link mt-3" href="{{ url_for('provincias') }}">Voltar para províncias</a>

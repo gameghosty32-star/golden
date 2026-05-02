@@ -6,18 +6,116 @@
 <div class="hero-card shadow-sm">
     <div class="hero-copy">
         <p class="eyebrow">Gestão de localidades</p>
-        <h1>CRUD de províncias, municípios, bairros e ruas</h1>
-        <p class="hero-text">Um painel leve em Flask com autenticação e design moderno nas cores branco, preto e creme.</p>
+        <h1>CRUD completo para províncias, municípios, bairros e ruas</h1>
+        <p class="hero-text">Acompanhe a hierarquia de localidades e adicione descrições a cada item cadastrado.</p>
         <div class="hero-actions">
-            <a class="btn btn-dark btn-lg" href="{{ url_for('login') }}">Entrar</a>
-            <a class="btn btn-outline-dark btn-lg" href="{{ url_for('signup') }}">Criar conta</a>
+            {% if current_user %}
+                <a class="btn btn-dark btn-lg" href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a class="btn btn-outline-dark btn-lg" href="{{ url_for('logout') }}">Sair</a>
+            {% else %}
+                <a class="btn btn-dark btn-lg" href="{{ url_for('login') }}">Entrar</a>
+                <a class="btn btn-outline-dark btn-lg" href="{{ url_for('signup') }}">Criar conta</a>
+            {% endif %}
         </div>
     </div>
     <div class="hero-panel">
         <div class="panel-surface">
-            <h2>Acesso rápido</h2>
-            <p>Cadastre sua conta para começar a gerenciar províncias, municípios, bairros e ruas com facilidade.</p>
+            <h2>Feed de localidades</h2>
+            <p>Veja as últimas províncias, municípios, bairros e ruas criados no sistema.</p>
         </div>
     </div>
+</div>
+
+<div class="feed-summary grid gap-3 mt-5">
+    <div class="summary-card">
+        <strong>{{ counts.provincias }}</strong>
+        <span>Províncias</span>
+    </div>
+    <div class="summary-card">
+        <strong>{{ counts.municipios }}</strong>
+        <span>Municípios</span>
+    </div>
+    <div class="summary-card">
+        <strong>{{ counts.bairros }}</strong>
+        <span>Bairros</span>
+    </div>
+    <div class="summary-card">
+        <strong>{{ counts.ruas }}</strong>
+        <span>Ruas</span>
+    </div>
+</div>
+
+<div class="feed-grid mt-5">
+    <section class="feed-card">
+        <div class="feed-card-header">
+            <h2>Províncias</h2>
+            <a href="{{ url_for('provincias') }}">Ver todas</a>
+        </div>
+        {% if feed.provincias %}
+            {% for provincia in feed.provincias %}
+                <article class="feed-item">
+                    <h3>{{ provincia.name }}</h3>
+                    <p>{{ provincia.description or 'Sem descrição adicional.' }}</p>
+                    <span class="feed-meta">Criada em {{ provincia.created_at.strftime('%d/%m/%Y') }} · {{ provincia.municipios|length }} municípios · População total: {{ provincia.effective_population if provincia.effective_population else '—' }}</span>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">Nenhuma província cadastrada ainda.</p>
+        {% endif %}
+    </section>
+
+    <section class="feed-card">
+        <div class="feed-card-header">
+            <h2>Municípios</h2>
+            <a href="{{ url_for('municipios') }}">Ver todos</a>
+        </div>
+        {% if feed.municipios %}
+            {% for municipio in feed.municipios %}
+                <article class="feed-item">
+                    <h3>{{ municipio.name }}</h3>
+                    <p>{{ municipio.description or 'Sem descrição adicional.' }}</p>
+                    <span class="feed-meta">{{ municipio.full_path }} · {{ municipio.bairros|length }} bairros · População total: {{ municipio.effective_population if municipio.effective_population else '—' }}</span>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">Nenhum município cadastrado ainda.</p>
+        {% endif %}
+    </section>
+
+    <section class="feed-card">
+        <div class="feed-card-header">
+            <h2>Bairros</h2>
+            <a href="{{ url_for('bairros') }}">Ver todos</a>
+        </div>
+        {% if feed.bairros %}
+            {% for bairro in feed.bairros %}
+                <article class="feed-item">
+                    <h3>{{ bairro.name }}</h3>
+                    <p>{{ bairro.description or 'Sem descrição adicional.' }}</p>
+                    <span class="feed-meta">{{ bairro.full_path }} · {{ bairro.ruas|length }} ruas · População total: {{ bairro.effective_population if bairro.effective_population else '—' }}</span>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">Nenhum bairro cadastrado ainda.</p>
+        {% endif %}
+    </section>
+
+    <section class="feed-card">
+        <div class="feed-card-header">
+            <h2>Ruas</h2>
+            <a href="{{ url_for('ruas') }}">Ver todas</a>
+        </div>
+        {% if feed.ruas %}
+            {% for rua in feed.ruas %}
+                <article class="feed-item">
+                    <h3>{{ rua.name }}</h3>
+                    <p>{{ rua.description or 'Sem descrição adicional.' }}</p>
+                    <span class="feed-meta">{{ rua.full_path }} · População: {{ rua.effective_population if rua.effective_population else '—' }}</span>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">Nenhuma rua cadastrada ainda.</p>
+        {% endif %}
+    </section>
 </div>
 {% endblock %}

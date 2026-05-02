@@ -13,6 +13,14 @@
             <label for="name" class="form-label">Nome do bairro</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ bairro.name if bairro else '' }}" required>
         </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Descrição</label>
+            <textarea class="form-control" id="description" name="description" rows="4">{{ bairro.description if bairro else '' }}</textarea>
+        </div>
+        <div class="mb-4">
+            <label for="population" class="form-label">População (opcional)</label>
+            <input type="number" min="0" class="form-control" id="population" name="population" value="{{ bairro.population if bairro and bairro.population is not none else '' }}">
+        </div>
         <div class="mb-4">
             <label for="municipio_id" class="form-label">Município</label>
             <select id="municipio_id" name="municipio_id" class="form-select" required>
