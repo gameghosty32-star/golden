@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
-{% block titulo %} Home    
-{% endblock %}
+
+{% block titulo %}Início{% endblock %}
 
 {% block conteudo %}
-    <h1> Olá, seja bem-vindo {{ nome }}</h1>
+<div class="hero-card shadow-sm">
+    <div class="hero-copy">
+        <p class="eyebrow">Gestão de localidades</p>
+        <h1>CRUD de províncias, municípios, bairros e ruas</h1>
+        <p class="hero-text">Um painel leve em Flask com autenticação e design moderno nas cores branco, preto e creme.</p>
+        <div class="hero-actions">
+            <a class="btn btn-dark btn-lg" href="{{ url_for('login') }}">Entrar</a>
+            <a class="btn btn-outline-dark btn-lg" href="{{ url_for('signup') }}">Criar conta</a>
+        </div>
+    </div>
+    <div class="hero-panel">
+        <div class="panel-surface">
+            <h2>Acesso rápido</h2>
+            <p>Cadastre sua conta para começar a gerenciar províncias, municípios, bairros e ruas com facilidade.</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

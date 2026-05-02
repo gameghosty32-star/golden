@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Criar conta{% endblock %}
+
+{% block conteudo %}
+<div class="auth-card mx-auto">
+    <div class="auth-header">
+        <h2>Criar conta</h2>
+        <p>Cadastre-se para começar a usar o painel de gestão.</p>
+    </div>
+    <form action="{{ url_for('signup') }}" method="post" class="auth-form">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ name or '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ email or '' }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="password" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-dark w-100">Cadastrar</button>
+        <p class="auth-meta">Já tem conta? <a href="{{ url_for('login') }}">Faça login</a>.</p>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ action }} rua{% endblock %}
+
+{% block conteudo %}
+<div class="auth-card mx-auto" style="max-width: 620px;">
+    <div class="auth-header">
+        <h2>{{ action }} rua</h2>
+        <p>Informe o nome da rua e selecione o bairro correspondente.</p>
+    </div>
+    <form action="" method="post" class="auth-form">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome da rua</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ rua.name if rua else '' }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="bairro_id" class="form-label">Bairro</label>
+            <select id="bairro_id" name="bairro_id" class="form-select" required>
+                <option value="">Selecione um bairro</option>
+                {% for bairro in bairros %}
+                    <option value="{{ bairro.id }}" {% if rua and rua.bairro_id == bairro.id %}selected{% endif %}>{{ bairro.name }} — {{ bairro.municipio.name }} / {{ bairro.municipio.provincia.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-dark w-100">{{ action }}</button>
+        <a class="btn btn-link mt-3" href="{{ url_for('ruas') }}">Voltar para ruas</a>
+    </form>
+</div>
+{% endblock %}

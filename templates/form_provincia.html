@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ action }} província{% endblock %}
+
+{% block conteudo %}
+<div class="auth-card mx-auto" style="max-width: 560px;">
+    <div class="auth-header">
+        <h2>{{ action }} província</h2>
+        <p>Informe o nome da província para continuar.</p>
+    </div>
+    <form action="" method="post" class="auth-form">
+        <div class="mb-4">
+            <label for="name" class="form-label">Nome da província</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ provincia.name if provincia else '' }}" required>
+        </div>
+        <button type="submit" class="btn btn-dark w-100">{{ action }}</button>
+        <a class="btn btn-link mt-3" href="{{ url_for('provincias') }}">Voltar para províncias</a>
+    </form>
+</div>
+{% endblock %}

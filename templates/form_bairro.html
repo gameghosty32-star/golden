@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ action }} bairro{% endblock %}
+
+{% block conteudo %}
+<div class="auth-card mx-auto" style="max-width: 620px;">
+    <div class="auth-header">
+        <h2>{{ action }} bairro</h2>
+        <p>Informe o nome do bairro e selecione o município.</p>
+    </div>
+    <form action="" method="post" class="auth-form">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome do bairro</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ bairro.name if bairro else '' }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="municipio_id" class="form-label">Município</label>
+            <select id="municipio_id" name="municipio_id" class="form-select" required>
+                <option value="">Selecione um município</option>
+                {% for municipio in municipios %}
+                    <option value="{{ municipio.id }}" {% if bairro and bairro.municipio_id == municipio.id %}selected{% endif %}>{{ municipio.name }} — {{ municipio.provincia.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-dark w-100">{{ action }}</button>
+        <a class="btn btn-link mt-3" href="{{ url_for('bairros') }}">Voltar para bairros</a>
+    </form>
+</div>
+{% endblock %}
